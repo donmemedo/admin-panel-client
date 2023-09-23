@@ -33,4 +33,4 @@ RUN yarn cache clean
 
 
 #Start App
-ENTRYPOINT /bin/bash -x ./entrypoint.sh && yarn start
+ENTRYPOINT /bin/bash -x ./entrypoint.sh  && yarn start

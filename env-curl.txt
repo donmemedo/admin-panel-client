@@ -1,1 +1,1 @@
-http://gitlab.tech1a.co/api/v4/projects/127/repository/files/stg-key-value.json/raw?ref=main
+http://81.91.151.149/api/v4/projects/127/repository/files/asiatech-key-value.json/raw?ref=main
