@@ -13,7 +13,7 @@ import { jalali } from "../../../common/functions/common-funcions";
 export default function EditMarketersRelations() {
     const { selectedRows, fetchData, searchQuery, setSelectedRows } = useContext<any>(RelationsContext)
     const { toolbar } = useSearchFilters(ModuleIdentifier.MARKETER_APP_RELATIONS, 'edit')
-    const { mutate } = useMutation({ url: `${MARKETER_ADMIN}/marketer/modify-marketers-relations`, method: "PUT" })
+    const { mutate } = useMutation({ url: `${MARKETER_ADMIN}/marketer-relation/modify`, method: "PUT" })
     const [modal, setModal] = useState(false)
     const [query, setQuery] = useState<any>({})
     const [selectedDayRange, setSelectedDayRange] = useState<DayRange>({
@@ -80,7 +80,7 @@ export default function EditMarketersRelations() {
 
     return (
         <>
-            <button className={'button bg-orange-500'} onClick={openHandler}>
+            <button className={'button bg-secondary'} onClick={openHandler}>
                 ویرایش رابطه بین دو بازاریاب
             </button>
             <Modal title={'ویرایش رابطه بین دو بازاریاب'} setOpen={setModal}
@@ -102,14 +102,14 @@ export default function EditMarketersRelations() {
                             }
                         </div>
                         <div className={'flex justify-end space-x-reverse space-x-2 mt-10'}>
-                            <button className="button bg-red-500"
+                            <button className="button bg-error"
                                 onClick={(e) => {
                                     e.preventDefault()
                                     setSelectedRows([])
                                     setModal(false)
                                 }}>لغو
                             </button>
-                            <button type={"submit"} className="button bg-lime-600" >تایید</button>
+                            <button type={"submit"} className="button bg-primary" >تایید</button>
                         </div>
                     </form>
                 </div>

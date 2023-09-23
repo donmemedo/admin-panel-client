@@ -3,7 +3,10 @@ import {
     activeStatus,
     bousreCodeType,
     CalculationBaseType,
+    CalculationBaseTypeEnums,
     category,
+    CoefficientBaseTypeEnums,
+    ContractTypeEnums,
     Hours,
     isActiveWithNoNull,
     isRequired,
@@ -138,10 +141,17 @@ export const FindEnum = (title: string, dynamicsOption: any, label = '') => {
         case 'isBourseCodeRequired':
         case 'isRequired':
         case 'IsRequired':
+        case 'IsReplica':
         case 'isSejami':
             return isRequired
         case 'Period':
             return Months
+        case 'ContractType':
+            return ContractTypeEnums
+        case 'CalculationBaseType':
+            return CalculationBaseTypeEnums
+        case 'CoefficientBaseType':
+            return CoefficientBaseTypeEnums
         case 'Status':
         case 'status':
             return StatusEnums
@@ -166,7 +176,7 @@ export function findBank(account: string) {
     }
 }
 
-export const splittedDate=(date:string)=>{
+export const splittedDate = (date: string) => {
     let _date = date.split('-')
-    return {year:Number(_date[0]),month:Number(_date[1]),day:Number(_date[2])}
+    return { year: Number(_date[0]), month: Number(_date[1]), day: Number(_date[2]) }
 }

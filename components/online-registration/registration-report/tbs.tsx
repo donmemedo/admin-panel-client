@@ -23,11 +23,7 @@ const TBSComponent = () => {
             setLoading(true)
             await mutate({ userId: row.userId || userId })
                 .then(() => {
-                    if (userId) {
-                        throwToast({ type: 'success', value: `وضعیت کاربر با موفقیت عوض شد ` })
-                    } else {
-                        throwToast({ type: 'success', value: ` وضعیت کاربر با کد ملی ${row.uniqueId}  با موفقیت عوض شد ` })
-                    }
+                    throwToast({ type: 'success', value: `ثبت در تدبیر` })
                     if (index + 1 < selectedRows?.length) {
                         Tbs(selectedRows[index + 1], index + 1)
                     }
@@ -49,7 +45,7 @@ const TBSComponent = () => {
 
     return (
         <Button label={'ثبت در تدبیر'}
-            className="bg-green-500 mr-auto"
+            className="!text-current border border-border mr-auto"
             onClick={TbsHandler}
             loading={loading}
             allowed={restriction ? [[service?.[0], modules?.[0]?.[1], 'Create'].join('.')] : []}

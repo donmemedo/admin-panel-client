@@ -1,4 +1,4 @@
-import { ADMIN_GATEWAY, IDP } from "../api/constants";
+import { ADMIN_GATEWAY, IDP, MARKETER_ADMIN } from "../api/constants";
 import moment from "jalali-moment";
 import { splittedDate } from "components/common/functions/common-funcions";
 
@@ -188,6 +188,19 @@ const filters: any = {
       "bourseCode": [
         { "title": "code", "name": " کد بورسی", "type": "input" },
         { "title": "type", "name": "نوع کد بورسی", "type": "selectInput" },
+      ],
+      "agentInfo": [
+        { "title": "FirstName", "name": "نام(وکیل) ", "type": "input", "isRequired": true },
+        { "title": "LastName", "name": " (وکیل)نام خانوادگی", "type": "input", "isRequired": true },
+        { "title": "FatherName", "name": " نام پدر(وکیل)", "type": "input", "isRequired": true },
+        { "title": "UniqueId", "name": "کد ملی(وکیل)", "type": "input", "isRequired": true },
+        { "title": "BirthCertificateNumber", "name": "شماره شناسنامه (وکیل)", "type": "input", "isRequired": true },
+        { "title": "SerialNumber", "name": "شماره سریال شناسنامه", "type": "input", "isRequired": true },
+        { "title": "SerialLetter", "name": "حرف سریال شناسنامه", "type": "input", "isRequired": true },
+        { "title": "SerialSeri", "name": "سری سریال شناسنامه", "type": "input", "isRequired": true },
+        { "title": "IsReplica", "name": "	المثنی است؟", "type": "selectInput", "isRequired": true },
+        { "title": "BirthCertificateCity", "name": "شهر محل صدور", "type": "input", "isRequired": true },
+        { "title": "Address", "name": "	آدرس (وکیل)", "type": "input", "isRequired": true },
       ]
     }
   },
@@ -504,8 +517,8 @@ const filters: any = {
           "queryField": "NationalId",
           "recordField": "id"
         },
-        { "title": "tbsMarketerId", "name": "شناسه بازاریاب در TBS",  "initialValue": "" },
-        { "title": "tbsReagentId", "name": "شناسه معرف در TBS",  "initialValue": "" }
+        { "title": "tbsMarketerId", "name": "شناسه بازاریاب در TBS", "initialValue": "" },
+        { "title": "tbsReagentId", "name": "شناسه معرف در TBS", "initialValue": "" }
       ]
     }
   },
@@ -631,7 +644,7 @@ const filters: any = {
   },
   "customer-management_marketerContract": {
     services: {
-      "CustomerManagement":[
+      "CustomerManagement": [
         {
           module: "MarketerContract",
           permissions: ['Read', 'Create', 'Edit', 'Delete']
@@ -1495,7 +1508,7 @@ const filters: any = {
         { "title": "PageNumber", "name": "شماره صفحه", "type": null },
         { "title": "PageSize", "name": "تعداد", "type": null },
         {
-          "title": "IdpID",
+          "title": "MarketerID",
           "name": "حساب کاربری (کد ملی کاربر)",
           "type": "dynamicSearch",
           "initialValue": "",
@@ -1521,6 +1534,111 @@ const filters: any = {
         "SortBy": "RegisterDate",
         "SortOrder": 1,
       }
+    },
+  },
+  "marketer-app_marketerContract": {
+    services: {},
+    "search": {
+      "filters": [
+        {
+          "title": "MarketerID",
+          "name": "حساب کاربری (کد ملی کاربر)",
+          "type": "dynamicSearch",
+          "initialValue": "",
+          "endpoint": `${MARKETER_ADMIN}/marketer/search`,
+          "valueField": ["Title"],
+          "queryField": "UniqueId",
+          "recordField": "MarketerID",
+        },
+        { "title": "ID", "name": "شناسه قرارداد", "type": "input" },
+        { "title": "CalculationBaseType", "name": "نوع محاسابات", "type": "selectInput" },
+        { "title": "CoefficientBaseType", "name": "نوع ضرائب", "type": "selectInput" },
+        { "title": "ContractNumber", "name": "شماره قرارداد", "type": "input" },
+        { "title": "ContractType", "name": "نوع قرارداد", "type": "selectInput" },
+        { "title": "Title", "name": "عنوان", "type": "input" },
+        { "title": "Description", "name": "توضیحات", "type": "input" },
+        { "title": "date", "name": "تاریخ شروع و پایان", "type": "date" },
+      ],
+      "initialValue": {
+        "MarketerID": '',
+        "ID": '',
+        "StartDate": null,
+        "EndDate": null,
+        "CalculationBaseType": '',
+        "CoefficientBaseType": '',
+        "ContractNumber": "",
+        "ContractType": '',
+        "Title": '',
+        "Description": '',
+      }
+    },
+    "toolbar": {
+      "modal": [
+        {
+          "title": "MarketerID",
+          "name": "حساب کاربری (کد ملی کاربر)",
+          "type": "dynamicSearch",
+          "initialValue": "",
+          "endpoint": `${MARKETER_ADMIN}/marketer/search`,
+          "valueField": ["Title"],
+          "queryField": "UniqueId",
+          "recordField": "MarketerID",
+        },
+        { "title": "CalculationBaseType", "name": "نوع پایه محاسبه", "type": "input" },
+        { "title": "CoefficientBaseType", "name": "ضریب نوع پایه", "type": "input" },
+        { "title": "ContractNumber", "name": "شماره قرارداد", "type": "input" },
+        { "title": "ContractType", "name": "نوع قرارداد", "type": "selectInput" },
+        { "title": "Title", "name": "عنوان", "type": "input" },
+        { "title": "Description", "name": "توضیحات", "type": "input" },
+        { "title": "date", "name": "تاریخ شروع و پایان", "type": "date" },
+      ]
+    }
+  },
+  "marketer-app_marketers": {
+    services: {},
+    "search": {
+      "filters": [
+        { "title": "PageNumber", "name": "شماره صفحه", "type": null },
+        { "title": "PageSize", "name": "تعداد", "type": null },
+        { "title": "TbsReagentName", "name": "TBS عنوان معرف", "type": "input" },
+        { "title": "UniqueId", "name": "کدملی", "type": "input" },
+        { "title": "Mobile", "name": "موبایل", "type": "input" }
+      ],
+      "initialValue": {
+        "PageNumber": 1,
+        "PageSize": 20,
+        "Title": '',
+        "UniqueId": null,
+        "Mobile": null
+      }
+    },
+  },
+  "marketer-app_marketerContract_detail": {
+    services: {},
+    "toolbar": {
+      "coeff-add": [
+        { "title": "MarketerID", "name": "شناسه بازارایاب", "type": "input" },
+        { "title": "Title", "name": "عنوان", "type": "input" },
+        { "title": "CoefficientPercentage", "name": "درصد ضریب", "type": "input" },
+        { "title": "HighThreshold", "name": "حد بالای پله", "type": "input" },
+        { "title": "LowThreshold", "name": "حد پائین پله", "type": "input" },
+        { "title": "StepNumber", "name": "شماره پله", "type": "input" },
+      ],
+      "add": [
+        { "title": "MarketerID", "name": "شناسه بازارایاب", "type": "input" },
+        { "title": "Title", "name": "عنوان", "type": "input" },
+        { "title": "CollateralCoefficient", "name": "ضریب کسورات حسن انجام کار", "type": "input" },
+        { "title": "TaxCoefficient", "name": "ضریب مالیات", "type": "input" },
+        { "title": "InsuranceCoefficient", "name": "ضریب کسورات بیمه", "type": "input" },
+        { "title": "ReturnDuration", "name": "دوره برگشت کسورات", "type": "input" },
+      ],
+      "edit": [
+        { "title": "Title", "name": "عنوان", "type": "input" },
+        { "title": "CollateralCoefficient", "name": "ضریب کسورات حسن انجام کار", "type": "input" },
+        { "title": "TaxCoefficient", "name": "ضریب مالیات", "type": "input" },
+        { "title": "InsuranceCoefficient", "name": "ضریب کسورات بیمه", "type": "input" },
+        { "title": "ReturnDuration", "name": "دوره برگشت کسورات", "type": "input" },
+      ],
     },
   },
   "asset-switch": {
