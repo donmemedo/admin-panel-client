@@ -12,7 +12,7 @@ import { DayRange } from "react-modern-calendar-datepicker";
 export default function AddMarketersRelations() {
     const { fetchData, searchQuery } = useContext<any>(RelationsContext)
     const { toolbar } = useSearchFilters(ModuleIdentifier.MARKETER_APP_RELATIONS, 'add')
-    const { mutate } = useMutation({ url: `${MARKETER_ADMIN}/marketer/add-marketers-relations` })
+    const { mutate } = useMutation({ url: `${MARKETER_ADMIN}/marketer-relation/add` })
     const [modal, setModal] = useState(false)
     const [query, setQuery] = useState<any>({})
     const [selectedDayRange, setSelectedDayRange] = useState<DayRange>({ from: null, to: null })
@@ -44,7 +44,7 @@ export default function AddMarketersRelations() {
 
     return (
         <>
-            <button className={'button bg-green-500'} onClick={openHandler}>
+            <button className={'button bg-primary'} onClick={openHandler}>
                 ایجاد رابطه بین دو بازاریاب
             </button>
             <Modal title={'ایجاد رابطه بین دو بازاریاب'} setOpen={setModal}
@@ -66,13 +66,13 @@ export default function AddMarketersRelations() {
                             }
                         </div>
                         <div className={'flex justify-end space-x-reverse space-x-2 mt-10'}>
-                            <button className="button bg-red-500"
+                            <button className="button bg-error"
                                 onClick={(e) => {
                                     e.preventDefault()
                                     setModal(false)
                                 }}>لغو
                             </button>
-                            <button type={"submit"} className="button bg-lime-600">تایید</button>
+                            <button type={"submit"} className="button bg-primary">تایید</button>
                         </div>
                     </form>
                 </div>
