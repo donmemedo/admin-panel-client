@@ -26,8 +26,8 @@ export default function TablePagination({
 }: { query: any, onSubmit: Function, totalCount: number, module: string, exportExcel: () => void }) {
 
     const { user_permissions: userPermissions } = useSelector((state: any) => state.appConfig)
-    const [pageQuery, setPageQuery] = useState({ PageSize: 20, PageNumber: 1 })
-    const { service, modules } = useSearchFilters(module)
+    const [pageQuery, setPageQuery] = useState({ PageSize: query?.PageSize || 20, PageNumber: 1 })
+    const { service, modules, restriction } = useSearchFilters(module)
 
     const sizes = [10, 20, 50, 100, 200, 300, 400, 500, 1000]
     const queryUpdate = (key: string, value: any) => {
@@ -49,12 +49,12 @@ export default function TablePagination({
     return (
         <div className={'flex items-center mx-auto py-3 space-x-2 space-x-reverse'}>
             <div className="relative rounded">
-                <Listbox disabled={!isAllowed({ userPermissions, whoIsAllowed: [[service?.[0], modules?.[0]?.[0], 'Read'].join('.')] })} name={'PageSize'} value={pageQuery?.PageSize}
+                <Listbox disabled={restriction ? !isAllowed({ userPermissions, whoIsAllowed: [[service?.[0], modules?.[0]?.[0], 'Read'].join('.')] }) : false} name={'PageSize'} value={pageQuery?.PageSize}
                     onChange={(e: any) => {
                         queryUpdate('PageSize', e);
                         onSubmit({ ...pageQuery, PageNumber: 1, PageSize: e })
                     }}>
-                    {({ open }) => (
+                    {({ open }: { open: boolean }) => (
                         <div className="relative">
                             <Listbox.Button
                                 className="relative flex min-w-full cursor-pointer rounded-md border border-border disabled:cursor-not-allowed bg-white py-1.5 px-2 shadow-sm focus:border-border focus:outline-none">
@@ -80,7 +80,7 @@ export default function TablePagination({
                                     {sizes.map((size: any) => (
                                         <Listbox.Option
                                             key={size}
-                                            className={({ active }) =>
+                                            className={({ active }: { active: boolean }) =>
                                                 classNames(
                                                     active ? 'bg-border' : '',
                                                     'relative cursor-pointer select-none py-1 pl-3 pr-3'
@@ -88,7 +88,7 @@ export default function TablePagination({
                                             }
                                             value={size}
                                         >
-                                            {({ selected, active }) => (
+                                            {({ selected, active }: { selected: boolean, active: boolean }) => (
                                                 <>
                                                     <div className="flex items-center">
                                                         <span>

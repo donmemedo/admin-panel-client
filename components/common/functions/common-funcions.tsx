@@ -1,9 +1,15 @@
 import moment from "jalali-moment";
 import {
     activeStatus,
+    AssetStatusEnums,
     bousreCodeType,
     CalculationBaseType,
+    CalculationBaseTypeEnums,
     category,
+    changeTypeEnums,
+    CoefficientBaseTypeEnums,
+    ContractTypeEnums,
+    customerTypeEnums,
     Hours,
     isActiveWithNoNull,
     isRequired,
@@ -112,7 +118,12 @@ export const FindEnum = (title: string, dynamicsOption: any, label = '') => {
         case 'orderOrigin':
             return orderOrigin
         case 'personType':
+        case 'PersonType':
             return personTypeEnums
+        case 'CustomerType':
+            return customerTypeEnums
+        case "ChangeType":
+            return changeTypeEnums
         case 'personOrigin':
             return personOriginEnums
         case 'subsidiaryTypeCode':
@@ -138,13 +149,24 @@ export const FindEnum = (title: string, dynamicsOption: any, label = '') => {
         case 'isBourseCodeRequired':
         case 'isRequired':
         case 'IsRequired':
+        case 'IsReplica':
         case 'isSejami':
             return isRequired
         case 'Period':
             return Months
+        case 'ContractType':
+            return ContractTypeEnums
+        case 'CalculationBaseType':
+            return CalculationBaseTypeEnums
+        case 'CoefficientBaseType':
+            return CoefficientBaseTypeEnums
         case 'Status':
         case 'status':
-            return StatusEnums
+            if (label === 'وضعیت تغییر کارگزاری') {
+                return AssetStatusEnums
+            } else {
+                return StatusEnums
+            }
         case 'UserType':
             return UserType
         case 'SortBy':
@@ -166,7 +188,7 @@ export function findBank(account: string) {
     }
 }
 
-export const splittedDate=(date:string)=>{
+export const splittedDate = (date: string) => {
     let _date = date.split('-')
-    return {year:Number(_date[0]),month:Number(_date[1]),day:Number(_date[2])}
+    return { year: Number(_date[0]), month: Number(_date[1]), day: Number(_date[2]) }
 }

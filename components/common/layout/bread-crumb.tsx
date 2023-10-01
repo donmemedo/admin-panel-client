@@ -39,6 +39,7 @@ export default function BreadCrumbComponent() {
         "live-portfo": 'پرتفو لحظه ای',
         '[[...query]]': 'تاریخچه',
         '[...detail]': 'جزییات اطلاعات کاربر',
+        '[...contractId]': 'جزییات قرارداد بازاریاب',
         "customer-management": 'مدیریت مشتریان',
         "subsidiary": 'شرکت ها',
         "branch": 'شعب',
@@ -59,7 +60,14 @@ export default function BreadCrumbComponent() {
         "relations": 'ارتباط بازاریاب ها',
         "recite": 'گزارش صورتحسابهای بازاریاب',
         "sub-users": 'زیر مجموعه ها',
-        "asset-switch": 'گزارش تغییر ناظر'
+        "marketers": 'بازارایاب ها',
+        "marketer-contract": 'قرارداد بازاریاب ',
+        "asset-switch": 'درخواست تغییر ناظر',
+        "reconcilation": 'گزارش مغایرت بازاریاب',
+        "csdi-portfo": "پرتفو سپرده گذاری",
+        "asset-switch-report": "گزارش تغییر ناظر",
+        "switch-report": "گزارش معاملات پورتفوی سپرده گذاری",
+        "portfo-comparison": "مقایسه پورتفوی"
     }
 
     useEffect(() => {

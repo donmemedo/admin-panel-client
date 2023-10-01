@@ -9,11 +9,12 @@ import { ModuleIdentifier } from "../../../common/functions/Module-Identifier";
 import { RelationsContext } from "../../../../pages/marketer-app/relations";
 import { DayRange } from "@amir04lm26/react-modern-calendar-date-picker";
 import { jalali } from "../../../common/functions/common-funcions";
+import { Button } from "components/common/components/button/button";
 
 export default function EditMarketersRelations() {
     const { selectedRows, fetchData, searchQuery, setSelectedRows } = useContext<any>(RelationsContext)
-    const { toolbar } = useSearchFilters(ModuleIdentifier.MARKETER_APP_RELATIONS, 'edit')
-    const { mutate } = useMutation({ url: `${MARKETER_ADMIN}/marketer/modify-marketers-relations`, method: "PUT" })
+    const { toolbar } = useSearchFilters(ModuleIdentifier.MARKETER_APP_relations, 'edit')
+    const { mutate } = useMutation({ url: `${MARKETER_ADMIN}/marketer-relation/modify`, method: "PUT" })
     const [modal, setModal] = useState(false)
     const [query, setQuery] = useState<any>({})
     const [selectedDayRange, setSelectedDayRange] = useState<DayRange>({
@@ -80,9 +81,7 @@ export default function EditMarketersRelations() {
 
     return (
         <>
-            <button className={'button bg-orange-500'} onClick={openHandler}>
-                ویرایش رابطه بین دو بازاریاب
-            </button>
+            <Button label="ویرایش رابطه بین دو بازاریاب" className={'bg-secondary'} onClick={openHandler} />
             <Modal title={'ویرایش رابطه بین دو بازاریاب'} setOpen={setModal}
                 open={modal}>
                 <div className="field mt-4">
@@ -102,14 +101,14 @@ export default function EditMarketersRelations() {
                             }
                         </div>
                         <div className={'flex justify-end space-x-reverse space-x-2 mt-10'}>
-                            <button className="button bg-red-500"
+                            <Button className=" bg-error"
+                                label="لغو"
                                 onClick={(e) => {
                                     e.preventDefault()
                                     setSelectedRows([])
                                     setModal(false)
-                                }}>لغو
-                            </button>
-                            <button type={"submit"} className="button bg-lime-600" >تایید</button>
+                                }} />
+                            <Button type={"submit"} className=" bg-primary" label="تایید" />
                         </div>
                     </form>
                 </div>

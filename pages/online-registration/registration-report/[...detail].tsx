@@ -34,6 +34,7 @@ import { useSearchFilters } from "../../../hooks/useSearchFilters";
 import { ModuleIdentifier } from "../../../components/common/functions/Module-Identifier";
 import EditBourseCode from "components/online-registration/registration-report/edit-bourse-code";
 import { withPermission } from "components/common/layout/with-permission";
+const UpdateAgentInfo = dynamic(() => import("components/online-registration/registration-report/update-agent-info"));
 
 export const OnlineRegDetailContext = createContext({})
 function Detail() {
@@ -162,7 +163,25 @@ function Detail() {
                 }
                 return moodDetails;
             },
-        }
+        },
+        {
+            field: 'isTBSDocsInserted',
+            headerName: 'ثبت فایل قراردادها در TBS؟',
+            cellRendererSelector: () => {
+                const ColourCellRenderer = (rowData: any) => {
+                    return (
+                        <div className={'flex items-center space-x-2 space-x-reverse'}>
+                            <span>{rowData.data.isTBSDocsInserted ? 'بله' : 'خیر'}</span>
+                            <DateCell date={rowData.data.tbsDocsInsertDateTime ? rowData.data.tbsDocsInsertDateTime : ''} />
+                        </div>
+                    )
+                };
+                const moodDetails = {
+                    component: ColourCellRenderer,
+                }
+                return moodDetails;
+            },
+        },
     ]
     const detailCellRendererParams = useMemo(() => {
         return {
@@ -266,11 +285,11 @@ function Detail() {
                 <div className={'border border-border rounded-t-lg'}>
                     <div className={'toolbar p-2'}>
                         <EditRegStateComponent />
-                        <InquirySejamStateComponent />
-                        <EditRefCode />
-                        <BuildAgreementsFiles />
                         <EditRefCode />
                         <EditBourseCode />
+                        <UpdateAgentInfo />
+                        <InquirySejamStateComponent />
+                        <BuildAgreementsFiles />
                         <TBSComponent />
                         <AgreementToTbs />
                     </div>

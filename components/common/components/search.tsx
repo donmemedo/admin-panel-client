@@ -1,9 +1,9 @@
 import InputComponent from "./input-generator";
-import React, { forwardRef, useEffect, useImperativeHandle, useState, FormEventHandler } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useState, memo } from "react";
 import { DayRange } from "@amir04lm26/react-modern-calendar-date-picker";
 import { useSearchFilters } from "../../../hooks/useSearchFilters";
 import moment from "jalali-moment";
-import { DayValue } from "react-modern-calendar-datepicker";
+import { Day, DayValue } from "react-modern-calendar-datepicker";
 import { Button } from "./button/button";
 import { SearchComponentTypes } from "types/types";
 
@@ -16,6 +16,7 @@ const SearchComponent: React.FC<SearchComponentTypes> = forwardRef((props, ref) 
         from: null,
         to: null
     });
+    const [selectedDay, setSelectedDay] = useState<DayValue>(null);
 
     const onChange = (key: string, value: any) => {
         let _query: any = { ...query };
@@ -63,6 +64,8 @@ const SearchComponent: React.FC<SearchComponentTypes> = forwardRef((props, ref) 
                             onChange={onChange}
                             selectedDayRange={selectedDayRange}
                             setSelectedDayRange={setSelectedDayRange}
+                            selectedDay={selectedDay}
+                            setSelectedDay={setSelectedDay}
                             dynamicsOption={dynamicOptions}
                         />
                     })
@@ -70,7 +73,7 @@ const SearchComponent: React.FC<SearchComponentTypes> = forwardRef((props, ref) 
             </div>
             <div className={'flex space-x-3 space-x-reverse mr-auto mt-10 h-fit ' + extraClassName}>
                 <Button label={'لغو فیلتر ها'}
-                    className=" bg-red-600 h-fit"
+                    className=" bg-error h-fit "
                     type="reset"
                     onClick={(e) => {
                         e.preventDefault()
@@ -79,7 +82,7 @@ const SearchComponent: React.FC<SearchComponentTypes> = forwardRef((props, ref) 
                     }}
                 />
                 <Button label={'جستجو'}
-                    className="bg-lime-600 h-fit relative"
+                    className="bg-primary h-fit relative "
                     type={'submit'}
                     disabled={loading}
                     loading={loading}
@@ -90,5 +93,5 @@ const SearchComponent: React.FC<SearchComponentTypes> = forwardRef((props, ref) 
     )
 })
 
-export default SearchComponent;
+export default memo(SearchComponent);
 SearchComponent.displayName = 'SearchComponent';

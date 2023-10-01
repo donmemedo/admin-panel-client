@@ -173,11 +173,18 @@ export default function SideBarContent() {
             expanded: router.pathname.startsWith('/marketer-app'),
             children: [
                 {
+                    label: 'بازاریاب ها',
+                    url: '/marketer-app/marketers',
+                    as: '/marketer-app/marketers',
+                    className: router.pathname === '/marketer-app/marketers' ? 'sideBarActive' : '',
+                    module: ModuleIdentifier.MARKETER_APP_marketers,
+                },
+                {
                     label: 'ارتباط بازاریاب ها',
                     url: '/marketer-app/relations',
                     as: '/marketer-app/relations',
                     className: router.pathname === '/marketer-app/relations' ? 'sideBarActive' : '',
-                    module: ModuleIdentifier.MARKETER_APP_RELATIONS,
+                    module: ModuleIdentifier.MARKETER_APP_relations,
                 },
                 {
                     label: 'گزارش صورتحسابهای بازاریاب',
@@ -192,6 +199,20 @@ export default function SideBarContent() {
                     as: '/marketer-app/sub-users',
                     className: router.pathname === '/marketer-app/sub-users' ? 'sideBarActive' : '',
                     module: ModuleIdentifier.MARKETER_APP_subusers,
+                },
+                {
+                    label: 'قرارداد بازاریاب',
+                    url: '/marketer-app/marketer-contract',
+                    as: '/marketer-app/marketer-contract',
+                    className: router.pathname === '/marketer-app/marketer-contract' ? 'sideBarActive' : '',
+                    module: ModuleIdentifier.MARKETER_APP_marketerContract,
+                },
+                {
+                    label: 'گزارش مغایرت بازاریاب',
+                    url: '/marketer-app/reconcilation',
+                    as: '/marketer-app/reconcilation',
+                    className: router.pathname === '/marketer-app/reconcilation' ? 'sideBarActive' : '',
+                    module: ModuleIdentifier.MARKETER_APP_reconcilation,
                 }
             ],
         },
@@ -204,14 +225,48 @@ export default function SideBarContent() {
                     url: '/portfo/live-portfo',
                     as: '/portfo/live-portfo',
                     className: router.pathname === '/portfo/live-portfo' ? 'sideBarActive' : '',
-                    module: ModuleIdentifier.LIVE_PORTFO,
+                    module: ModuleIdentifier.PORTFO_live,
                 },
                 {
-                    label: 'گزارش تغییر ناظر',
+                    label: 'درخواست تغییر ناظر',
                     url: '/portfo/asset-switch',
                     as: '/portfo/asset-switch',
                     className: router.pathname === '/portfo/asset-switch' ? 'sideBarActive' : '',
-                    module: ModuleIdentifier.ASSET_SWITCH,
+                    module: ModuleIdentifier.PORTFO_asset_switch_request,
+                }
+            ],
+        },
+        {
+            label: 'پرتفو سپرده گذاری',
+            expanded: router.pathname.startsWith('/csdi-portfo'),
+            children: [
+                {
+                    label: 'پورتفوی سپرده گذاری',
+                    url: '/csdi-portfo',
+                    as: '/csdi-portfo',
+                    className: router.pathname === '/csdi-portfo' ? 'sideBarActive' : '',
+                    module: ModuleIdentifier.CSDI_PORTFO,
+                },
+                {
+                    label: 'گزارش تغییر ناظر',
+                    url: '/csdi-portfo/asset-switch-report',
+                    as: '/csdi-portfo/asset-switch-report',
+                    className: router.pathname === '/csdi-portfo/asset-switch-report' ? 'sideBarActive' : '',
+                    module: ModuleIdentifier.CSDI_PORTFO_asset_switch_report,
+                },
+                {
+                    label: 'گزارش معاملات پورتفوی سپرده گذاری',
+                    url: '/csdi-portfo/switch-report',
+                    as: '/csdi-portfo/switch-report',
+                    className: router.pathname === '/csdi-portfo/switch-report' ? 'sideBarActive' : '',
+                    module: ModuleIdentifier.CSDI_PORTFO_switch_report,
+                },
+                {
+                    label: 'مقایسه پورتفوی',
+                    url: '/csdi-portfo/portfo-comparison',
+                    as: '/csdi-portfo/portfo-comparison',
+                    className: router.pathname === '/csdi-portfo/portfo-comparison' ? 'sideBarActive' : '',
+                    module: ModuleIdentifier.CSDI_PORTFO_comparison,
                 }
             ],
         },

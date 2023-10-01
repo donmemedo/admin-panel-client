@@ -11,7 +11,7 @@ import { useContext, useState } from "react"
 
 
 export const CreateRequest = () => {
-    const { toolbar, service, modules, restriction } = useSearchFilters(ModuleIdentifier.ASSET_SWITCH, 'add')
+    const { toolbar, service, modules, restriction } = useSearchFilters(ModuleIdentifier.PORTFO_asset_switch_request, 'add')
     const { fetchData, query: searchQuery } = useContext<any>(AssetSwitchContext)
     const { mutate } = useMutation({ url: `${ADMIN_GATEWAY}/api/request/AssetSwitchRequest` })
     const [modal, setModal] = useState<boolean>(false)
@@ -47,7 +47,7 @@ export const CreateRequest = () => {
             <Button label="ایجاد درخواست تغییر ناظر"
                 disabled={loading}
                 allowed={restriction ? [[service[0], modules[0][0], 'Create'].join('')] : []}
-                className={'bg-fuchsia-600'}
+                className={'bg-primary'}
                 onClick={modalHandler}
             />
             <Modal open={modal} setOpen={setModal} title="ایجاد درخواست تغییر ناظر">
@@ -66,14 +66,14 @@ export const CreateRequest = () => {
                     </form>
                     <div className={'flex justify-end space-x-reverse space-x-2 mt-10'}>
                         <Button label={'لغو'}
-                            className="bg-red-500"
+                            className="bg-error"
                             onClick={(e) => {
                                 e.preventDefault()
                                 setModal(false)
                             }}
                         />
                         <Button label={'تایید'}
-                            className="bg-lime-600"
+                            className="bg-primary"
                             onClick={addNewHandler}
                             loading={loading}
                             type={'submit'}

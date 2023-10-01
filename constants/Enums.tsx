@@ -227,6 +227,62 @@ export const isRequired: any[] = [
     }
 ];
 
+export const CalculationBaseTypeEnums = [
+    {
+        title: "جدول شماره ۱",
+        id: "PlanOne"
+    },
+    {
+        title: "جدول شماره ۲",
+        id: "PlanTwo"
+    },
+    {
+        title: "جدول شماره ۳",
+        id: "PlanThree"
+    },
+    {
+        title: "نامشخص",
+        id: "NoPlan"
+    },
+    {
+        title: "ثابت شماره ۱",
+        id: "ConstOne"
+    },
+    {
+        title: "ثابت شماره ۲",
+        id: "ConstTwo"
+    },
+    {
+        title: "ثابت شماره ۳",
+        id: "ConstThree"
+    },
+    {
+        title: "ثابت شماره ۴",
+        id: "ConstFour"
+    },
+]
+
+export const CoefficientBaseTypeEnums = [
+    {
+        title: "پلکان",
+        id: "Plan"
+    },
+    {
+        title: "ثابت",
+        id: "Const"
+    }
+]
+export const ContractTypeEnums = [
+    {
+        id: "Agency",
+        title: "نمایندگی"
+    },
+    {
+        id: "Independent",
+        title: "مستقل"
+    }
+]
+
 export const Months: any[] = [
     {
         "id": '140201',
@@ -496,12 +552,60 @@ export const personTypeEnums = [
         "enTitle": "LegalPerson",
         "title": "حقوقی"
     },
-    // {
-    //     "id": 3,
-    //     "code": 3,
-    //     "enTitle": "PrivatePortfolio",
-    //     "title": "سبد اختصاصی"
-    // }
+    {
+        "id": 3,
+        "code": 3,
+        "enTitle": "Both",
+        "title": "هر دو"
+    }
+]
+
+export const customerTypeEnums = [
+    {
+        "id": 0,
+        "code": 0,
+        "enTitle": "LegalPerson",
+        "title": "حقوقی"
+    },
+    {
+        "id": 1,
+        "code": 1,
+        "enTitle": "PrivatePerson",
+        "title": "حقیقی"
+    },
+]
+
+export const changeTypeEnums = [
+    {
+        "id": 0,
+        "code": 0,
+        "enTitle": "UnKnown",
+        "title": "نامشخص"
+    },
+    {
+        "id": 1,
+        "code": 1,
+        "enTitle": "Buy",
+        "title": "خرید"
+    },
+    {
+        "id": 2,
+        "code": 2,
+        "enTitle": "Sell",
+        "title": "فروش"
+    },
+    {
+        "id": 3,
+        "code": 3,
+        "enTitle": "SwitchIn",
+        "title": "ورود سهام با تغییر ناظر"
+    },
+    {
+        "id": 4,
+        "code": 4,
+        "enTitle": "SwitchOut",
+        "title": "خروج سهام با تغییر ناظر"
+    }
 ]
 export const personOriginEnums = [
     {
@@ -819,6 +923,39 @@ export const stationTypeEnum: any = [
         "code": 3,
         "enTitle": "OMS",
         "title": "OMS"
+    }
+]
+
+export const AssetStatusEnums: any = [
+    {
+        "id": 1,
+        "code": 1,
+        "enTitle": "Registered",
+        "title": "ثبت شده"
+    },
+    {
+        "id": 2,
+        "code": 2,
+        "enTitle": "Pending",
+        "title": "در حال بررسی"
+    },
+    {
+        "id": 3,
+        "code": 3,
+        "enTitle": "Accepted",
+        "title": "تایید شده"
+    },
+    {
+        "id": 4,
+        "code": 4,
+        "enTitle": "Rejected",
+        "title": "رد شده"
+    },
+    {
+        "id": 5,
+        "code": 5,
+        "enTitle": "Canceled",
+        "title": "لغو شده"
     }
 ]
 

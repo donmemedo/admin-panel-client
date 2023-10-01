@@ -122,12 +122,12 @@ const CategoryResultModal = (props: CategoryResultModalTypes) => {
         };
     }, []);
 
-    const onSelectionChanged = () => {
-        const selectedRows = gridRef.current?.api?.getSelectedRows();
+    const onSelectionChanged = (rowData: any) => {
+        const selectedRows = rowData.data
         let fields = ['marketTitle', 'marketCode', 'offerTypeTitle', 'sideTitle', 'settlementDelayTitle', 'customerTypeTitle', 'customerCounterSideTitle',]
         queryHandler({
-            CommissionCategoryId: selectedRows[0].id,
-            CommissionCategoryTitle: fields.map((item: string) => { if (selectedRows[0][`${item}`]) { return selectedRows[0][`${item}`] } }).join('-')
+            CommissionCategoryId: selectedRows.id,
+            CommissionCategoryTitle: fields.map((item: string) => { if (selectedRows[`${item}`]) { return selectedRows[`${item}`] } }).join('-')
         })
         setOpen(false)
     }
@@ -147,12 +147,12 @@ const CategoryResultModal = (props: CategoryResultModalTypes) => {
                         rowModelType={'infinite'}
                         cacheBlockSize={10}
                         cacheOverflowSize={2}
-                        onSelectionChanged={onSelectionChanged}
+                        onRowClicked={onSelectionChanged}
                         // maxConcurrentDatasourceRequests={1}
                         infiniteInitialRowCount={10}
                         maxBlocksInCache={100}
                         onGridReady={onGridReady}
-                    ></AgGridReact>
+                    />
                 </div>
             </div>
         </Modal>

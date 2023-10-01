@@ -10,6 +10,7 @@ import DateCell from "components/common/table/date-cell";
 import { formatNumber } from "components/common/functions/common-funcions";
 import AssetSwitchToolbar from "components/asset-switch/asset-switch-toolbar";
 import { withPermission } from "components/common/layout/with-permission";
+import { AssetStatusEnums } from "constants/Enums";
 
 export const AssetSwitchContext = createContext({})
 function AssetSwitch() {
@@ -52,6 +53,11 @@ function AssetSwitch() {
         {
             field: 'status',
             headerName: 'وضعیت ',
+            valueFormatter: (rowData: any) => {
+                return (
+                    AssetStatusEnums.find((item: any) => item.id === rowData.data.status)?.title
+                )
+            },
         }, {
             field: 'description',
             headerName: 'توضیحات ',
@@ -59,6 +65,7 @@ function AssetSwitch() {
         {
             field: 'username',
             headerName: 'حساب کاربری',
+
         },
         {
             field: 'createDateTime',
@@ -128,17 +135,17 @@ function AssetSwitch() {
         <AssetSwitchContext.Provider value={{ selectedRows, fetchData, query }}>
             <div className={'flex flex-col h-full flex-1'}>
                 <AccordionComponent>
-                    <SearchComponent onSubmit={fetchData} loading={loading} module={ModuleIdentifier.ASSET_SWITCH} />
+                    <SearchComponent onSubmit={fetchData} loading={loading} module={ModuleIdentifier.PORTFO_asset_switch_request} />
                 </AccordionComponent>
                 <AssetSwitchToolbar />
                 <TableComponent data={data?.result?.pagedData}
-                    module={ModuleIdentifier.ASSET_SWITCH}
+                    module={ModuleIdentifier.PORTFO_asset_switch_request}
                     loading={loading}
                     columnDefStructure={columnDefStructure}
                     detailCellRendererParams={detailCellRendererParams}
                     rowId={['customerId', 'instrumentId']}
                     pagination={true}
-                    rowSelection={'multiple'}
+                    rowSelection={'single'}
                     selectedRows={selectedRows}
                     setSelectedRows={setSelectedRows}
                     masterDetail={true}
@@ -151,4 +158,4 @@ function AssetSwitch() {
     )
 }
 
-export default withPermission(AssetSwitch,ModuleIdentifier.ASSET_SWITCH)
+export default withPermission(AssetSwitch, ModuleIdentifier.PORTFO_asset_switch_request)

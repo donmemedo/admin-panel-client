@@ -40,7 +40,7 @@ function Relations() {
     ]
     const {
         data, fetchData, query: searchQuery, loading
-    }: any = useQuery({ url: `${MARKETER_ADMIN}/marketer/search-marketers-relations` })
+    }: any = useQuery({ url: `${MARKETER_ADMIN}/marketer-relation/search` })
 
     const detailCellRendererParams = useMemo(() => {
         return {
@@ -114,7 +114,7 @@ function Relations() {
         <RelationsContext.Provider value={{ selectedRows, setSelectedRows, fetchData, searchQuery, data }}>
             <div className={'flex flex-col h-full flex-1'}>
                 <AccordionComponent>
-                    <SearchComponent onSubmit={fetchData} loading={loading} module={ModuleIdentifier.MARKETER_APP_RELATIONS} />
+                    <SearchComponent onSubmit={fetchData} loading={loading} module={ModuleIdentifier.MARKETER_APP_relations} />
                 </AccordionComponent>
                 <RelationToolbar />
                 <TableComponent data={data?.result?.pagedData}
@@ -131,4 +131,4 @@ function Relations() {
     )
 }
 
-export default withPermission(Relations,ModuleIdentifier.MARKETER_APP_RELATIONS)
+export default withPermission(Relations, ModuleIdentifier.MARKETER_APP_relations)
