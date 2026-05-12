@@ -295,7 +295,7 @@ function Commission() {
     const [selectedRows, setSelectedRows] = useState<any>([])
     const [ids, setIds] = useState<any>({})
     const [detailLoading, setDetailLoading] = useState<boolean>(false)
-    const ref: any = useRef()
+    const ref: any = useRef<any>(null)
     useEffect(() => {
         if (categoryData?.result?.pagedData?.length) {
             setCategoryModal(true)

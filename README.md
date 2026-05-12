@@ -1,34 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Admin Panel Modernized
 
-## Getting Started
+This package is a cleaned and modernized version of the uploaded admin panel.
 
-First, run the development server:
+## What changed
+
+- Frontend upgraded to Next.js 16, React 19, TypeScript 6, ESLint flat config, and a modern Node 24 LTS Docker image.
+- Company-specific endpoints, private registry references, GitLab deployment hooks, private GitLab curl token usage, and .NET CI jobs were removed.
+- Runtime configuration now comes from `NEXT_PUBLIC_*` environment variables or the generated `public/static/assets/js/env-config.js` file.
+- A Python FastAPI backend gateway was added under `backend/` to replace company-specific service coupling with configurable proxy targets.
+- Local font binaries were removed from the distributable. The UI now uses a system font stack.
+
+## Local development
+
+Install frontend dependencies:
+
+```bash
+npm install
+```
+
+Run the FastAPI backend:
+
+```bash
+cd backend
+python -m venv .venv
+. .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+Run the Next.js frontend:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `pages/live-portfo.api.tsx`. The page auto-updates as you edit the file.
+## Configure upstream services
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+The FastAPI proxy exposes these service aliases:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- `/proxy/admin/*` -> `ADMIN_SERVICE_URL`
+- `/proxy/online-trading/*` -> `ONLINE_TRADING_SERVICE_URL`
+- `/proxy/netflow/*` -> `NETFLOW_SERVICE_URL`
+- `/proxy/files/*` -> `FILE_SERVICE_URL`
+- `/proxy/marketer/*` -> `MARKETER_SERVICE_URL`
+- `/proxy/sejam/*` -> `SEJAM_SERVICE_URL`
 
-## Learn More
+Set the environment variables in `backend/.env` using `backend/.env.example` as a template.
 
-To learn more about Next.js, take a look at the following resources:
+## Docker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+docker compose up --build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Frontend: `http://localhost:3000`  
+Backend health: `http://localhost:8000/health`
 
-## Deploy on Vercel
+## Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The uploaded project contained only a Next.js client. There was no C# application source code to translate. The C#/.NET coupling present in the upload was CI/deployment infrastructure, so it has been replaced with the FastAPI gateway and Python-oriented backend setup.

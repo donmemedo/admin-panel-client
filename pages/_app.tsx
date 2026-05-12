@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import { Provider } from "react-redux";
 import store from "../store";
 import Head from "next/head";
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { AuthProvider } from "react-oidc-context"
 import Router from "next/router";
 import '../api/axios_interceptor';
@@ -40,14 +40,12 @@ const oidcConfig = {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-    const toast: any = useRef(null);
-
     const onSignIn = () => {
         Router.push('/dashboard')
     }
 
     const getFaviconPath = (isDarkMode = false) => {
-        return `/logo-dark.svg`;
+        return `/brand-mark.svg`;
     };
 
     return (
@@ -55,10 +53,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Provider store={store}>
                 <Head>
                     <link rel='icon' href={getFaviconPath(true)} type="image/svg+xml" />
-                    <title>پنل ادمین | توانا</title>
+                    <title>Admin Panel</title>
                 </Head>
                 <ToastContainer
-                    ref={toast}
                     position="top-left"
                     autoClose={5000}
                     hideProgressBar={false}
@@ -66,7 +63,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                     closeOnClick
                     rtl={true}
                     pauseOnFocusLoss
-                    toastStyle={{ fontFamily: "Yekan Bakh", fontSize: '14px' }}
+                    toastStyle={{ fontFamily: "Vazirmatn, Tahoma, Arial, sans-serif", fontSize: '14px' }}
                 />
                 <SWRConfig
                     value={{

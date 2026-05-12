@@ -1,47 +1,51 @@
-import getConfig from "next/config";
-const { publicRuntimeConfig: config } = getConfig();
+const DEFAULT_API_BASE_URL = 'http://localhost:8000';
+
+const normalizeUrl = (value) => {
+  if (!value) return undefined;
+  return String(value).replace(/\/$/, '');
+};
+
+const runtimeEnv = () => {
+  if (typeof window !== 'undefined' && window._env_) {
+    return window._env_;
+  }
+  return {};
+};
+
+const readRuntimeValue = (...keys) => {
+  const env = runtimeEnv();
+
+  for (const key of keys) {
+    const runtimeValue = normalizeUrl(env[key]);
+    if (runtimeValue) return runtimeValue;
+
+    const publicValue = normalizeUrl(process.env[`NEXT_PUBLIC_${key}`]);
+    if (publicValue) return publicValue;
+  }
+
+  return undefined;
+};
+
+export const API_BASE_URL =
+  readRuntimeValue('API_BASE_URL') || DEFAULT_API_BASE_URL;
 
 export const ONLINE_TRADING =
-    typeof window !== "undefined" ? window._env_.OnlineTradingGatewayEndPoint ? window._env_.OnlineTradingGatewayEndPoint : config.app.OnlineTradingGatewayEndPoint : config.app.OnlineTradingGatewayEndPoint;
+  readRuntimeValue('ONLINE_TRADING_URL', 'OnlineTradingGatewayEndPoint') || `${API_BASE_URL}/proxy/online-trading`;
 
 export const IDP =
-    typeof window !== "undefined"
-        ? window._env_.IdpEndPoint
-            ? window._env_.IdpEndPoint
-            : config.app.IdpEndPoint
-        : config.app.IdpEndPoint;
+  readRuntimeValue('IDP_URL', 'IdpEndPoint') || `${API_BASE_URL}/idp`;
 
 export const NETFLOW =
-    typeof window !== "undefined"
-        ? window._env_.NetflowEndPoint
-            ? window._env_.NetflowEndPoint
-            : config.app.NetflowEndPoint
-        : config.app.NetflowEndPoint;
+  readRuntimeValue('NETFLOW_URL', 'NetflowEndPoint', 'NetFlowEndPoint') || `${API_BASE_URL}/proxy/netflow`;
 
 export const ADMIN_GATEWAY =
-    typeof window !== "undefined"
-        ? window._env_.AdminGatewayEndPoint
-            ? window._env_.AdminGatewayEndPoint
-            : config.app.AdminGatewayEndPoint
-        : config.app.AdminGatewayEndPoint;
+  readRuntimeValue('ADMIN_GATEWAY_URL', 'AdminGatewayEndPoint') || `${API_BASE_URL}/proxy/admin`;
 
 export const FILE_SERVER =
-    typeof window !== "undefined"
-        ? window._env_.FileManagerEndPoint
-            ? window._env_.FileManagerEndPoint
-            : config.app.FileManagerEndPoint
-        : config.app.FileManagerEndPoint;
+  readRuntimeValue('FILE_SERVER_URL', 'FileManagerEndPoint') || `${API_BASE_URL}/proxy/files`;
 
 export const MARKETER_ADMIN =
-    typeof window !== "undefined"
-        ? window._env_.MarketerAdminEndPoint
-            ? window._env_.MarketerAdminEndPoint
-            : config.app.MarketerAdminEndPoint
-        : config.app.MarketerAdminEndPoint;
+  readRuntimeValue('MARKETER_ADMIN_URL', 'MarketerAdminEndPoint') || `${API_BASE_URL}/proxy/marketer`;
 
 export const SEJAM_GATEWAY =
-    typeof window !== "undefined"
-        ? window._env_.SejamGatewayEndPoint
-            ? window._env_.SejamGatewayEndPoint
-            : config.app.SejamGatewayEndPoint
-        : config.app.SejamGatewayEndPoint;
+  readRuntimeValue('SEJAM_GATEWAY_URL', 'SejamGatewayEndPoint') || `${API_BASE_URL}/proxy/sejam`;

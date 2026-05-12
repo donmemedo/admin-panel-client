@@ -8,7 +8,7 @@ export default function CustomDetailComponent({ data, node, api }: { data: any, 
     const rowId = node.id;
 
     //Grid
-    const gridRefDetail: any = useRef();
+    const gridRefDetail: any = useRef<any>(null);
     const gridStyle = useMemo(() => ({ width: '100%', height: '100%', margin: '0 auto' }), []);
 
     const colDefs = [

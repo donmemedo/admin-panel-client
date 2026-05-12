@@ -90,7 +90,7 @@ const InstrumentTypeResultModal = (props: CategoryResultModalTypes) => {
         }
     ]
 
-    const gridRef: any = useRef()
+    const gridRef: any = useRef<any>(null)
     const gridStyle = useMemo(() => ({ height: '100%', width: '100%' }), []);
     const defaultColDef = useMemo(() => {
         return {

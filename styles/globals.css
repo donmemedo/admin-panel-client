@@ -1,10 +1,8 @@
-@import '../public/yekanBakhFont.css';
-
 html,
 body {
     padding: 0;
     margin: 0;
-    font-family: "Yekan Bakh", sans-serif;
+    font-family: Vazirmatn, Tahoma, Arial, sans-serif;
     font-display: auto;
     color: #495057;
 }
@@ -12,6 +10,22 @@ body {
     color-scheme: light !important;
 }
 
+.tooltip::before{
+    background-color: #404040 !important;
+}
+.tooltip::after{
+    border-color: #404040 transparent transparent transparent !important;
+}
+
+.StyledReceipt {
+    background: #d4d4d4;
+    width: 22rem;
+    padding: 1rem 1rem 2rem;
+    --mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50%/30px 100%;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+  }
+  
 @media (prefers-color-scheme: dark) {
     :root{
         --b3:180 1.9608% 90% !important;
@@ -50,7 +64,9 @@ a {
 }
 
 .sideBarActive{
-    @apply bg-gray-200 p-2 rounded-md;
+    background-color: #e5e7eb;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
 }
 #collapse > span {
     text-align: right;
@@ -111,7 +127,7 @@ input[type=number] {
 }
 
 .ag-theme-alpine, .ag-chart-wrapper {
-    --ag-font-family: "Yekan Bakh", BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    --ag-font-family: Vazirmatn, Tahoma, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
     --ag-borders: none !important;
     --ag-borders-row: dashed 1px !important;
@@ -292,12 +308,36 @@ input[type=number] {
 
 @layer components {
     .button {
-        @apply
-        text-sm text-white p-1 px-2 rounded md:px-10 transition-all hover:opacity-70
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        color: #fff;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+    }
+
+    .button:hover{
+        opacity: 0.7;
     }
 
     .toolbar{
-        @apply grid grid-cols-3 md:flex gap-2 !px-4
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
     }
 
+    @media (min-width: 768px) {
+        .button {
+            padding-left: 2.5rem;
+            padding-right: 2.5rem;
+        }
+
+        .toolbar{
+            display: flex;
+        }
+    }
 }

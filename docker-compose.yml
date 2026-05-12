@@ -1,23 +1,33 @@
-version: "3.9"
 services:
-  admin-panel-client:
-    image: 172.24.65.12:81/repository/tech1a-docker-registry/admin-panel-client:latest
-    networks:
-      - omsnet
+  backend:
+    build:
+      context: ./backend
+    environment:
+      APP_NAME: admin-panel-api
+      CORS_ORIGINS: http://localhost:3000
+      PUBLIC_BASE_URL: http://localhost:8000
+      ADMIN_SERVICE_URL: ${ADMIN_SERVICE_URL:-}
+      ONLINE_TRADING_SERVICE_URL: ${ONLINE_TRADING_SERVICE_URL:-}
+      NETFLOW_SERVICE_URL: ${NETFLOW_SERVICE_URL:-}
+      FILE_SERVICE_URL: ${FILE_SERVICE_URL:-}
+      MARKETER_SERVICE_URL: ${MARKETER_SERVICE_URL:-}
+      SEJAM_SERVICE_URL: ${SEJAM_SERVICE_URL:-}
     ports:
-      - 9021:80
-    deploy:
-      mode: replicated
-      replicas: 1
-      update_config:
-        parallelism: 5
-        delay: 10s
-        order: start-first
-      restart_policy:
-        condition: any
-        delay: 10s
-        window: 20s
+      - "8000:8000"
 
-networks:
- omsnet:
-   external: false
+  web:
+    build:
+      context: .
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8000
+      NEXT_PUBLIC_IDP_URL: http://localhost:8000/idp
+      NEXT_PUBLIC_ADMIN_GATEWAY_URL: http://localhost:8000/proxy/admin
+      NEXT_PUBLIC_ONLINE_TRADING_URL: http://localhost:8000/proxy/online-trading
+      NEXT_PUBLIC_NETFLOW_URL: http://localhost:8000/proxy/netflow
+      NEXT_PUBLIC_FILE_SERVER_URL: http://localhost:8000/proxy/files
+      NEXT_PUBLIC_MARKETER_ADMIN_URL: http://localhost:8000/proxy/marketer
+      NEXT_PUBLIC_SEJAM_GATEWAY_URL: http://localhost:8000/proxy/sejam
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend

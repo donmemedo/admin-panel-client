@@ -1,25 +1,20 @@
 #!/bin/sh
-echo "window._env_ = " > ./public/static/assets/js/env-config.js
+set -eu
 
-for i in $(cat env-curl.txt)
-do
-echo $i
-curl -H "Accept: application/json" -H "Private-Token: gkvnJ2yQZpNnXWEkUkek" $i >> ./public/static/assets/js/env-config.js 
-done
-echo " ;" >> ./public/static/assets/js/env-config.js
+ENV_FILE="${ENV_CONFIG_FILE:-./public/static/assets/js/env-config.js}"
+mkdir -p "$(dirname "$ENV_FILE")"
 
-#for ARGUMENT in "$@"
-#do
-#   KEY=$(echo $ARGUMENT | cut -f1 -d=)
-#   echo $KEY
-#
-#   KEY_LENGTH=${#KEY}
-#   echo $KEY_LENGTH
-#
-#   VALUE="${ARGUMENT:$KEY_LENGTH+1}"
-#   echo $VALUE
-#
-#   echo "$KEY:'$VALUE'," >> ./env-config.js 
-#done
-#echo " };" >> ./public/static/assets/js/env-config.js
+cat > "$ENV_FILE" <<EOF
+window._env_ = {
+  API_BASE_URL: "${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000}",
+  IDP_URL: "${NEXT_PUBLIC_IDP_URL:-http://localhost:8000/idp}",
+  ADMIN_GATEWAY_URL: "${NEXT_PUBLIC_ADMIN_GATEWAY_URL:-http://localhost:8000/proxy/admin}",
+  ONLINE_TRADING_URL: "${NEXT_PUBLIC_ONLINE_TRADING_URL:-http://localhost:8000/proxy/online-trading}",
+  NETFLOW_URL: "${NEXT_PUBLIC_NETFLOW_URL:-http://localhost:8000/proxy/netflow}",
+  FILE_SERVER_URL: "${NEXT_PUBLIC_FILE_SERVER_URL:-http://localhost:8000/proxy/files}",
+  MARKETER_ADMIN_URL: "${NEXT_PUBLIC_MARKETER_ADMIN_URL:-http://localhost:8000/proxy/marketer}",
+  SEJAM_GATEWAY_URL: "${NEXT_PUBLIC_SEJAM_GATEWAY_URL:-http://localhost:8000/proxy/sejam}"
+};
+EOF
 
+exec "$@"

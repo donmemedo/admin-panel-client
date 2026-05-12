@@ -27,13 +27,15 @@ export const loadState = () => {
 
 
 const persistedState = loadState();
+const reducer = {
+    commissionConfig,
+    userManagementConfig,
+    appConfig,
+};
+
 const store = configureStore({
-    preloadedState: persistedState,
-    reducer: {
-        commissionConfig,
-        userManagementConfig,
-        appConfig,
-    },
+    reducer: reducer as any,
+    preloadedState: persistedState as any,
     devTools: process.env.NODE_ENV === 'development'
 })
 

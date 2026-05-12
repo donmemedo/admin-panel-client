@@ -12,7 +12,7 @@ import Link from "next/link";
 import { IDP } from "../../../api/constants";
 import { useDispatch } from "react-redux";
 import useSWR from "swr";
-import jwt_decode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { user_permissions } from '../../../store/app.config';
 import { clientId } from 'pages/_app';
 import { throwToast } from '../functions/notification';
@@ -33,7 +33,7 @@ export const Accessibility = () => {
     useEffect(() => {
         if (auth?.user?.access_token) {
             let token = auth?.user?.access_token
-            let decoded: TokenType = jwt_decode(token);
+            let decoded: TokenType = jwtDecode(token);
 
             console.log(decoded);
             if (typeof decoded?.permission == "string") {

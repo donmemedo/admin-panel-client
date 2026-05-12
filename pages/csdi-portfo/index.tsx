@@ -106,7 +106,7 @@ function CSDIPortfo() {
         }
     ]
     const { data, loading, query, fetchData } = useQuery({ url: `${ADMIN_GATEWAY}/api/request/GetHistoricalCustomerPortfolio` })
-    const ref: any = useRef()
+    const ref: any = useRef<any>(null)
 
     const findColId = (keyword: string, visible: boolean) => {
         const colsss = ref.current?.getTableColumns()

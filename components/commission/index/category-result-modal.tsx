@@ -96,7 +96,7 @@ const CategoryResultModal = (props: CategoryResultModalTypes) => {
         }
     ]
 
-    const gridRef: any = useRef()
+    const gridRef: any = useRef<any>(null)
     const onGridReady = (params: any) => {
         const dataSource = {
             rowCount: undefined,

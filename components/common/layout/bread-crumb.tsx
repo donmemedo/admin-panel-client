@@ -67,7 +67,9 @@ export default function BreadCrumbComponent() {
         "csdi-portfo": "پرتفو سپرده گذاری",
         "asset-switch-report": "گزارش تغییر ناظر",
         "switch-report": "گزارش معاملات پورتفوی سپرده گذاری",
-        "portfo-comparison": "مقایسه پورتفوی"
+        "portfo-comparison": "مقایسه پورتفوی",
+        "[...factorId]": "اصلاح مالی صورت حساب",
+        "detail": "جزییات",
     }
 
     useEffect(() => {

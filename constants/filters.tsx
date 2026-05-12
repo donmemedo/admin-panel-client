@@ -1,4 +1,4 @@
-import { ADMIN_GATEWAY, IDP, MARKETER_ADMIN } from "../api/constants";
+import { ADMIN_GATEWAY, IDP, MARKETER_ADMIN, SEJAM_GATEWAY } from "../api/constants";
 import moment from "jalali-moment";
 import { splittedDate } from "components/common/functions/common-funcions";
 
@@ -199,7 +199,18 @@ const filters: any = {
         { "title": "SerialLetter", "name": "حرف سریال شناسنامه", "type": "input", "isRequired": true },
         { "title": "SerialSeri", "name": "سری سریال شناسنامه", "type": "input", "isRequired": true },
         { "title": "IsReplica", "name": "	المثنی است؟", "type": "selectInput", "isRequired": true },
-        { "title": "BirthCertificateCity", "name": "شهر محل صدور", "type": "input", "isRequired": true },
+        {
+          "title": "BirthCertificateCity",
+          "name": "شهر محل صدور",
+          "type": "dynamicSearch",
+          "initialValue": "",
+          "endpoint": `${SEJAM_GATEWAY}/api/request/SearchCity`,
+          "valueField": ["cityName"],
+          "queryField": "CityName",
+          "recordField": "cityName",
+          "resultField": "response",
+          "isRequired": true
+        },
         { "title": "Address", "name": "	آدرس (وکیل)", "type": "input", "isRequired": true },
       ]
     }
@@ -1461,8 +1472,19 @@ const filters: any = {
     services: {},
     "search": {
       "filters": [
-        { "title": "MarketerID", "name": "شناسه بازاریاب", "type": "input" },
-        { "title": "Period", "name": "دوره زمانی", "type": "selectInput" }
+        {
+          "title": "MarketerID",
+          "name": "حساب کاربری (کد ملی کاربر)",
+          "type": "dynamicSearch",
+          "initialValue": "",
+          "endpoint": `${IDP}/api/users/SearchUserAccount`,
+          "valueField": ["firstName", "lastName", "UniqueId", "Mobile"],
+          "queryField": "NationalId",
+          "recordField": "id"
+        },
+        { "title": "FactorID", "name": "شناسه فاکتور", "type": "input" },
+        { "title": "Month", "name": "ماه", "type": "selectInput" },
+        { "title": "Year", "name": "سال", "type": "selectInput" }
       ],
       "initialValue": {
         "MarketerID": "",
@@ -1470,33 +1492,47 @@ const filters: any = {
       }
     },
     "toolbar": {
-      "add": [
-        { "title": "MarketerID", "name": "شناسه بازاریاب", "type": "input" },
-        { "title": "TotalPureVolume", "name": "مجموع گردش", "type": "input", "valueType": "number" },
-        { "title": "TotalFee", "name": "مجموع کارمزد", "type": "input", "valueType": "number" },
-        { "title": "PureFee", "name": "خالص کارمزد", "type": "input", "valueType": "number" },
-        { "title": "MarketerFee", "name": "کارمزد بازاریاب", "type": "input", "valueType": "number" },
-        { "title": "Plan", "name": "پلن دوره", "type": "input" },
-        { "title": "Tax", "name": "مالیات", "type": "input", "valueType": "number" },
-        { "title": "Collateral", "name": "Collateral", "type": "input", "valueType": "number" },
-        { "title": "FinalFee", "name": "کارمزد نهایی بازاریاب", "type": "input", "valueType": "number" },
-        { "title": "Payment", "name": "مبلغ قابل پرداخت", "type": "input", "valueType": "number" },
-        { "title": "FactorStatus", "name": "ضریب کارمزد معرفی بازاریاب", "type": "input", "valueType": "number" },
-        { "title": "Period", "name": "دوره زمانی", "type": "selectInput" }
+      "calculate": [
+        {
+          "title": "MarketerID",
+          "name": "حساب کاربری (کد ملی کاربر)",
+          "type": "dynamicSearch",
+          "initialValue": "",
+          "endpoint": `${IDP}/api/users/SearchUserAccount`,
+          "valueField": ["firstName", "lastName", "UniqueId", "Mobile"],
+          "queryField": "NationalId",
+          "recordField": "id"
+        },
+        { "title": "Month", "name": "ماه", "type": "selectInput" },
+        { "title": "Year", "name": "سال", "type": "selectInput" }
       ],
-      "edit": [
-        { "title": "MarketerID", "name": "شناسه بازاریاب", "type": "input" },
-        { "title": "TotalPureVolume", "name": "مجموع گردش", "type": "input", "valueType": "number" },
-        { "title": "TotalFee", "name": "مجموع کارمزد", "type": "input", "valueType": "number" },
-        { "title": "PureFee", "name": "خالص کارمزد", "type": "input", "valueType": "number" },
-        { "title": "MarketerFee", "name": "کارمزد بازاریاب", "type": "input", "valueType": "number" },
-        { "title": "Plan", "name": "پلن دوره", "type": "input" },
-        { "title": "Tax", "name": "مالیات", "type": "input", "valueType": "number" },
-        { "title": "Collateral", "name": "Collateral", "type": "input", "valueType": "number" },
-        { "title": "FinalFee", "name": "کارمزد نهایی بازاریاب", "type": "input", "valueType": "number" },
-        { "title": "Payment", "name": "مبلغ قابل پرداخت", "type": "input", "valueType": "number" },
-        { "title": "FactorStatus", "name": "ضریب کارمزد معرفی بازاریاب", "type": "input", "valueType": "number" },
-        { "title": "Period", "name": "دوره زمانی", "type": "selectInput" }
+      "edit-base": [
+        { "title": "Plan", "name": "پلکان", "type": "input" },
+        { "title": "TaxDeduction", "name": "مالیات", "type": "input", "valueType": "number" },
+        { "title": "TaxCoefficient", "name": "ضریب مالیات", "type": "input", "valueType": "number" },
+        { "title": "CollateralDeduction", "name": "کسورات حسن انجام کار", "type": "input", "valueType": "number" },
+        { "title": "CollateralCoefficient", "name": "ضریب کسورات حسن انجام کار", "type": "input", "valueType": "number" },
+        { "title": "InsuranceDeduction", "name": "کسورات بیمه ", "type": "input" },
+        { "title": "InsuranceCoefficient", "name": "ضریب کسورات بیمه", "type": "input", "valueType": "number" },
+        { "title": "MarketerTotalIncome", "name": "مجموع حق بازاریابی", "type": "input", "valueType": "number" },
+        { "title": "Payment", "name": "پرداختی ", "type": "input", "valueType": "number" },
+        { "title": "Status", "name": "وضعیت", "type": "input", "valueType": "number" },
+        { "title": "CalculationCoefficient", "name": "ضریب محاسبه حق بازاریابی", "type": "input", "valueType": "number" },
+        { "title": "TotalCMD", "name": "مجموع سهم صندوق توسعه", "type": "input", "valueType": "number" },
+        { "title": "IsCmdConcluded", "name": "سهم صندوق توسعه لحاظ میشود؟", "type": "selectInput" },
+        { "title": "MaketerCMDIncome", "name": "حق بازاریابی از سهم صندوق توسعه", "type": "input", "valueType": "number" },
+        { "title": "ReturnDuration", "name": "دوره برگشت سپرده ها", "type": "input", "valueType": "number" },
+        { "title": "InterimAmountDeduction", "name": "کسورات علی الحساب", "type": "input", "valueType": "number" },
+        { "title": "EmployeeSalaryDeduction", "name": "کسورات حقوق پرسنل", "type": "input", "valueType": "number" },
+        { "title": "EmployerInsuranceDeduction", "name": "کسورات بیمه سهم کارفرما", "type": "input", "valueType": "number" },
+        { "title": "RedemptionDeduction", "name": "کسورات بازخرید", "type": "input", "valueType": "number" },
+        { "title": "OtherDeduction", "name": "	سایر کسورات", "type": "input", "valueType": "number" },
+        { "title": "OtherDeductionDescription", "name": "توضیحات (سایر کسورات)", "type": "input" },
+        { "title": "CmdPayment", "name": "	پرداختی سهم صندوق توسعه", "type": "input", "valueType": "number" },
+        { "title": "CollateralReturnPayment", "name": "پرداختی برگشت حسن انجام کار", "type": "input", "valueType": "number" },
+        { "title": "InsuranceReturnPayment", "name": "پرداختی برگشت بیمه	", "type": "input", "valueType": "number" },
+        { "title": "OtherPayment", "name": "	سایر پرداختی ها", "type": "input", "valueType": "number" },
+        { "title": "OtherPaymentDescription", "name": "توضیحات (سایر پرداختی ها)", "type": "input" },
       ]
     }
 

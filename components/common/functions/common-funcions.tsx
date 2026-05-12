@@ -33,13 +33,15 @@ import {
     subsidiaryType,
     TypeOfBranches,
     UserType,
-    validityType
+    validityType,
+    Year
 } from "../../../constants/Enums";
 import { banks } from "../../online-registration/registration-report/enums";
 
 export const formatNumber = (params: any) => {
     if (typeof params?.value === 'number') {
-        return Math.floor(params.value)
+        return params.value
+            .toFixed(2)
             .toString()
             .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     } else {
@@ -151,9 +153,12 @@ export const FindEnum = (title: string, dynamicsOption: any, label = '') => {
         case 'IsRequired':
         case 'IsReplica':
         case 'isSejami':
+        case 'IsCmdConcluded':
             return isRequired
-        case 'Period':
+        case 'Month':
             return Months
+        case 'Year':
+            return Year
         case 'ContractType':
             return ContractTypeEnums
         case 'CalculationBaseType':

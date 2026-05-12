@@ -1,36 +1,26 @@
-# Dockerfile
+# syntax=docker/dockerfile:1.7
 
-# base image
-FROM registry.tech1a.co:81/repository/tech1a-docker-registry/node:14.18
-#FROM node:alpine
+FROM node:24-alpine AS deps
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
 
-ENV TZ=Asia/Tehran
+FROM node:24-alpine AS builder
+WORKDIR /app
+ENV NEXT_TELEMETRY_DISABLED=1
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN npm run build
 
+FROM node:24-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production     NEXT_TELEMETRY_DISABLED=1     PORT=3000
 
-#RUN apt-get update
-#RUN apt-get install tzdata -y
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
 
-# create & set working directory
-RUN mkdir -p /usr/src
-WORKDIR /usr/src
-
-# copy source files
-COPY . /usr/src
-
-# set permission
-RUN chmod +x /usr/src/entrypoint.sh
-CMD /usr/src/entrypoint.sh
-
-# install dependencies
-RUN yarn install
-
-# start app
-RUN yarn run build
-EXPOSE 80
-
-#RUN rm -rf /usr/src/node_modules
-RUN yarn cache clean
-
-
-#Start App
-ENTRYPOINT /bin/bash -x ./entrypoint.sh && yarn start
+EXPOSE 3000
+ENTRYPOINT ["/bin/sh", "./entrypoint.sh"]
+CMD ["node", "server.js"]

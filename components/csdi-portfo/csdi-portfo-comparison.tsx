@@ -1,6 +1,6 @@
 import { SwitchToggle } from "components/common/components/button/switch-toggle";
 import React, { useState } from "react";
-import { AgChartsReact } from 'ag-charts-react';
+import { AgCharts } from 'ag-charts-react';
 
 export default function CSDIPortfoComparisonToolbar(props: { toggleAction: (keyword: string, visible: boolean) => void, data: any }) {
     const { toggleAction, data } = props
@@ -62,8 +62,8 @@ export default function CSDIPortfoComparisonToolbar(props: { toggleAction: (keyw
             <div className={'p-2'}>
                 <div className="flex items-center justify-between">
                     <SwitchToggle isChecked={state === 'lastPrice'} onChange={changeHandler} labelAfter={'قیمت پایانی'} labelBefore={'قیمت آخرین  معامله'} />
-                    <AgChartsReact options={option1} />
-                    <AgChartsReact options={option2} />
+                    <AgCharts options={option1} />
+                    <AgCharts options={option2} />
                 </div>
             </div>
         </div>
